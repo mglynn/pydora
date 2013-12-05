@@ -8,9 +8,11 @@ from bs4 import BeautifulSoup
 def get_similar_artists(artist):
     """Returns a list of similar artists."""
     artist = artist.replace(' ', '-').lower()
-    url = 'http://pandora.com/xml/music/artist/'
 
-    tree = ET.parse(urllib.request.urlopen(url + artist))
+    url = 'http://pandora.com/xml/music/artist/'
+    url = ''.join("{0}{1}".format(url, artist))
+
+    tree = ET.parse(urllib.request.urlopen(url))
     root = tree.getroot()
 
     similar_artists = [artist.get('name') for artist in root.iter('artist')]
@@ -21,9 +23,11 @@ def get_similar_songs(artist, song):
     """Returns a list of similar songs with their respective artists."""
     artist = artist.replace(' ', '-').lower()
     song = song.replace(' ', '-').lower()
-    url = 'http://www.pandora.com/music/song/'
 
-    page = urllib.request.urlopen(url + artist + '/' + song)
+    url = 'http://www.pandora.com/music/song/'
+    url = ''.join("{0}{1}{2}{3}".format(url, artist, '/', song))
+
+    page = urllib.request.urlopen(url)
     soup = BeautifulSoup(page.read())
 
     similar_songs_title = soup.findAll('div', {'class': 'similar_title'})
