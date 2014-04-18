@@ -11,7 +11,7 @@ def get_similar_artists(artist):
     artist = artist.replace(' ', '-').lower()
 
     url = 'http://pandora.com/xml/music/artist/'
-    url = ''.join("{}{}".format(url, artist))
+    url = ''.join('{}{}'.format(url, artist))
 
     tree = ET.parse(urllib.request.urlopen(url))
     root = tree.getroot()
@@ -27,7 +27,7 @@ def get_similar_songs(artist, song):
     song = song.replace(' ', '-').lower()
 
     url = 'http://www.pandora.com/music/song/'
-    url = ''.join("{}{}{}{}".format(url, artist, '/', song))
+    url = ''.join('{}{}{}{}'.format(url, artist, '/', song))
 
     page = urllib.request.urlopen(url)
     soup = BeautifulSoup(page.read())
