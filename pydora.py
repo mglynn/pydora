@@ -5,12 +5,13 @@ import xml.etree.ElementTree as ET
 
 from bs4 import BeautifulSoup
 
+
 def get_similar_artists(artist):
     """Returns a list of similar artists."""
     artist = artist.replace(' ', '-').lower()
 
     url = 'http://pandora.com/xml/music/artist/'
-    url = ''.join("{0}{1}".format(url, artist))
+    url = ''.join("{}{}".format(url, artist))
 
     tree = ET.parse(urllib.request.urlopen(url))
     root = tree.getroot()
@@ -19,13 +20,14 @@ def get_similar_artists(artist):
 
     return similar_artists
 
+
 def get_similar_songs(artist, song):
     """Returns a list of similar songs with their respective artists."""
     artist = artist.replace(' ', '-').lower()
     song = song.replace(' ', '-').lower()
 
     url = 'http://www.pandora.com/music/song/'
-    url = ''.join("{0}{1}{2}{3}".format(url, artist, '/', song))
+    url = ''.join("{}{}{}{}".format(url, artist, '/', song))
 
     page = urllib.request.urlopen(url)
     soup = BeautifulSoup(page.read())
@@ -37,6 +39,7 @@ def get_similar_songs(artist, song):
     artists = [artist['title'] for artist in similar_songs_artist]
 
     return list(zip(titles, artists))
+
 
 def main():
     parser = argparse.ArgumentParser(description='Query Pandora for information about artists and their songs.')
